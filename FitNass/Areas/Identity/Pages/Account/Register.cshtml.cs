@@ -151,16 +151,6 @@ namespace FitNass.Areas.Identity.Pages.Account
             return Page();
         }
 
-        [AcceptVerbs("GET", "POST")]
-        public IActionResult VerifyEmail(string email)
-        {
-            if (!_userM.VerifyEmail(email))
-            {
-                return Json($"Email {email} is already in use.");
-            }
-
-            return Json(true);
-        }
 
     }
 }
