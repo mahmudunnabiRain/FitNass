@@ -11,6 +11,10 @@ namespace FitNass.Data
 {
     public class FitNassContext : IdentityDbContext<FitNassUser>
     {
+        public FitNassContext()
+        {
+        }
+
         public FitNassContext(DbContextOptions<FitNassContext> options)
             : base(options)
         {

@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using FitNass.Validators;
 
 namespace FitNass.Areas.Identity.Pages.Account
 {
@@ -49,12 +50,14 @@ namespace FitNass.Areas.Identity.Pages.Account
             [Required]
             [DataType(DataType.Text)]
             [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
+            [MinLength(3, ErrorMessage = "First name cannot be smaller than 3 characters.")]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
             [Required]
             [DataType(DataType.Text)]
             [StringLength(50, ErrorMessage = "Last name cannot be longer than 50 characters.")]
+            [MinLength(3, ErrorMessage = "Last name cannot be smaller than 3 characters.")]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
@@ -75,16 +78,18 @@ namespace FitNass.Areas.Identity.Pages.Account
             public string Location { get; set; }
 
             [Required]
+            [UniqueEmail]
             [EmailAddress]
             [StringLength(50, ErrorMessage = "Email cannot be longer than 50 characters.")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
+            /*[Required]
+            [UniquePhone]
             [Phone]
             [StringLength(15, ErrorMessage = "Phone Number cannot be longer than 50 characters.")]
             [Display(Name = "Phone Number")]
-            public string PhoneNumber { get; set; }
+            public string PhoneNumber { get; set; }*/
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -100,18 +105,28 @@ namespace FitNass.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("/");
+            }
+
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("/");
+            }
+
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
                 var user = new FitNassUser {
-                    UserName = Input.Email, Email = Input.Email, PhoneNumber = Input.PhoneNumber,
+                    UserName = Input.Email, Email = Input.Email,
                     LastName = Input.LastName, DOB = Input.DOB, Sex = Input.Sex, Location = Input.Location
                 };
 
