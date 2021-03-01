@@ -126,7 +126,7 @@ namespace FitNass.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new FitNassUser {
-                    UserName = Input.Email, Email = Input.Email,
+                    UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName,
                     LastName = Input.LastName, DOB = Input.DOB, Sex = Input.Sex, Location = Input.Location
                 };
 

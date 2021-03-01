@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using FitNass.Areas.Identity.Data;
+using FitNass.Validators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -33,21 +34,64 @@ namespace FitNass.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+
+            [Required]
+            [DataType(DataType.Text)]
+            [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
+            [MinLength(3, ErrorMessage = "First name cannot be smaller than 3 characters.")]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [StringLength(50, ErrorMessage = "Last name cannot be longer than 50 characters.")]
+            [MinLength(3, ErrorMessage = "Last name cannot be smaller than 3 characters.")]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            [Display(Name = "Date of birth")]
+            public DateTime DOB { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Sex")]
+            public string Sex { get; set; }
+
+            [Required]
+            [DataType(DataType.Text)]
+            [StringLength(50, ErrorMessage = "Location cannot be longer than 50 characters.")]
+            [Display(Name = "Location")]
+            public string Location { get; set; }
+
+            /*[Required]
+            [UniquePhone]
             [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
+            [StringLength(15, ErrorMessage = "Phone Number cannot be longer than 50 characters.")]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }*/
         }
 
         private async Task LoadAsync(FitNassUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+
+            var firstName = user.FirstName;
+            var lastName = user.LastName;
+            var dob = user.DOB;
+            var sex = user.Sex;
+            var location = user.Location;
 
             Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                FirstName = firstName,
+                LastName = lastName,
+                DOB = dob,
+                Sex = sex,
+                Location = location
             };
         }
 
@@ -77,7 +121,7 @@ namespace FitNass.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            /*var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
@@ -86,7 +130,8 @@ namespace FitNass.Areas.Identity.Pages.Account.Manage
                     StatusMessage = "Unexpected error when trying to set phone number.";
                     return RedirectToPage();
                 }
-            }
+            }*/
+
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
