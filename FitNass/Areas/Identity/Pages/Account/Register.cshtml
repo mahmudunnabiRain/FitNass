@@ -6,12 +6,17 @@
 
 @*<h1>@ViewData["Title"]</h1>*@
 
-<div class="row justify-content-center">
-    <div class="col-md-6 card">
+<div class="row mt-5">
+
+    <div class="col-md-5 align-self-center mb-5">
+        <img src="~/images/FITNASS-Logo-Label.png" class="mx-auto d-block" alt="" />
+    </div>
+
+    <div class="col-md-6 card shadow" style="background-color:snow">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="card-body">
             <h4>Create a new account.</h4>
             <hr />
-            @*<div asp-validation-summary="All" class="text-danger"></div>*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="row">
                 <div class="col-md-6">
@@ -87,6 +92,13 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Register</button>
+            <div class="btn-group btn-block" role="group" aria-label="Button Group">
+                @*<a class="btn btn-outline-info btn-sm" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>*@
+
+                <a class="btn btn-outline-info btn-sm" asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Already have account?</a>
+
+                @*<a class="btn btn-outline-info btn-sm" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>*@
+            </div>
         </form>
     </div>
 </div>

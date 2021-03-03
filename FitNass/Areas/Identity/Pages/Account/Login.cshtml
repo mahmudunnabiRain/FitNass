@@ -6,13 +6,18 @@
 }
 
 @*<h1>@ViewData["Title"]</h1>*@
-<div class="row justify-content-center">
-    <div class="col-md-6 card">
+<div class="row mt-5">
+
+    <div class="col-md-5 align-self-center mb-5">
+        <img src="~/images/FITNASS-Logo-Label.png" class="mx-auto d-block" alt=""/>
+    </div>
+
+    <div class="col-md-5 card shadow" style="background-color:snow">
         <section>
             <form id="account" method="post" class="card-body">
                 <h4>Use a local account to log in.</h4>
                 <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Input.Email"></label>
                     <input asp-for="Input.Email" class="form-control" />
@@ -34,16 +39,13 @@
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">Log in</button>
                 </div>
-                <div class="form-group text-center">
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
+
+                <div class="btn-group btn-block" role="group" aria-label="Button Group">
+                    <a class="btn btn-outline-info btn-sm" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+
+                    <a class="btn btn-outline-info btn-sm" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+
+                    @*<a class="btn btn-outline-info btn-sm" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>*@
                 </div>
             </form>
         </section>

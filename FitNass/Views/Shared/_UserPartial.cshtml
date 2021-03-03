@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using FitNass.Areas.Identity.Data
+
+@inject SignInManager<FitNassUser> SignInManager
+@inject UserManager<FitNassUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="dropdown">
+        <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+            @{
+                var currentUser = await UserManager.GetUserAsync(User);
+                if (currentUser.Sex == "female")
+                {
+                    <img src="~/images/Blank-DP-Female.jpg" class="rounded-circle" alt="User" width="36" height="36" />
+                }
+                else
+                {
+                    <img src="~/images/Blank-DP-Male.jpg" class="rounded-circle" alt="User" width="36" height="36" />
+                }
+            }
+        </a>
+
+        <style>
+            .dropdown-item:hover, .dropdown-item:focus {
+                background-color: #0275d8;
+                text-decoration: none;
+                color: white;
+            }
+
+                .dropdown-item:hover[id=logout], .dropdown-item:focus[id=logout] {
+                    color: white;
+                    text-decoration: none;
+                    background-color: red;
+                }
+        </style>
+
+        <div class="dropdown-menu dropdown-menu-right mt-2 shadow-lg border-primary" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" id="manage" asp-area="Identity" asp-page="/Account/Manage/Index">Settings</a>
+            <a class="dropdown-item" href="#">Activity</a>
+            <a class="dropdown-item" href="#">Help</a>
+            <div class="dropdown-divider"></div>
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button id="logout" type="submit" class="dropdown-item alert-danger">Logout</button>
+            </form>
+        </div>
+    </div>
+
+}
+

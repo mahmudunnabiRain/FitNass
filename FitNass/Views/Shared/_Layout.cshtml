@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using FitNass.Areas.Identity.Data
+
+@inject SignInManager<FitNassUser> SignInManager
+@inject UserManager<FitNassUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -13,14 +18,29 @@
 </head>
 <body>
     <header>
+        @if (SignInManager.IsSignedIn(User))
+        {
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FitNass</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/FITNASS-Logo.png" class="rounded-sm" alt="FitNass" width="36" height="36" />
+                </a>
+
+                <form class="d-flex mr-5">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fa fa-search"></i></div>
+                        </div>
+                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    </div>
+                    @*<button class="btn btn-outline-success" type="submit">Search</button>*@
+                </form>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between order-2">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -29,11 +49,17 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
-
                     <partial name="_LoginPartial.cshtml" />
                 </div>
+
+                <div class="order-1 order-sm-3">
+                    <partial name="_UserPartial.cshtml" />
+                </div>
+
             </div>
         </nav>
+        }
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
