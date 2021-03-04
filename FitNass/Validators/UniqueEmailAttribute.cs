@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitNass.Validators
 {
@@ -19,7 +20,7 @@ namespace FitNass.Validators
             FitNassContext db = (FitNassContext)validationContext.GetService(typeof(FitNassContext));
 
             var email = ((string)value);
-            var targetUser = db.Users.SingleOrDefault(b => b.Email.Equals(email));
+            var targetUser = db.Users.SingleOrDefaultAsync(b => b.Email.Equals(email));
 
             if (targetUser != null)
             {

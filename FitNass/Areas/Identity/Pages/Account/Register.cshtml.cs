@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using FitNass.Validators;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitNass.Areas.Identity.Pages.Account
 {
@@ -126,9 +127,16 @@ namespace FitNass.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+                var link = Input.FirstName+"-"+Input.LastName+"-"+ new Random().Next(10000000, 100000000);
+                while(await _userManager.Users.SingleOrDefaultAsync(b => b.Link.Equals(link)) != null )
+                {
+                    link = Input.FirstName + "-" + Input.LastName + "-" + new Random().Next(10000000, 100000000);
+                }
+
                 var user = new FitNassUser {
                     UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName,
-                    LastName = Input.LastName, DOB = Input.DOB, Sex = Input.Sex, Location = Input.Location
+                    LastName = Input.LastName, DOB = Input.DOB, Sex = Input.Sex, Location = Input.Location,
+                    Link = link
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

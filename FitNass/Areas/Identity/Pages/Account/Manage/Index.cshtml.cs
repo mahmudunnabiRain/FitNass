@@ -25,6 +25,7 @@ namespace FitNass.Areas.Identity.Pages.Account.Manage
         }
 
         public string Username { get; set; }
+        public string Link { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -71,6 +72,7 @@ namespace FitNass.Areas.Identity.Pages.Account.Manage
             [StringLength(15, ErrorMessage = "Phone Number cannot be longer than 50 characters.")]
             [Display(Name = "Phone Number")]
             public string PhoneNumber { get; set; }*/
+
         }
 
         private async Task LoadAsync(FitNassUser user)
@@ -84,6 +86,7 @@ namespace FitNass.Areas.Identity.Pages.Account.Manage
             var location = user.Location;
 
             Username = userName;
+            Link = user.Link;
 
             Input = new InputModel
             {

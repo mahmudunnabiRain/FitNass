@@ -12,13 +12,17 @@
 
             @{
                 var currentUser = await UserManager.GetUserAsync(User);
-                if (currentUser.Sex == "female")
+                if (currentUser.Sex == "Female")
                 {
                     <img src="~/images/Blank-DP-Female.jpg" class="rounded-circle" alt="User" width="36" height="36" />
                 }
-                else
+                else if (currentUser.Sex == "Male")
                 {
                     <img src="~/images/Blank-DP-Male.jpg" class="rounded-circle" alt="User" width="36" height="36" />
+                }
+                else
+                {
+                    <img src="~/images/Blank-DP-Female.jpg" class="rounded-circle" alt="User" width="36" height="36" />
                 }
             }
         </a>
@@ -38,9 +42,9 @@
         </style>
 
         <div class="dropdown-menu dropdown-menu-right mt-2 shadow-lg border-primary" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">Profile</a>
-            <a class="dropdown-item" id="manage" asp-area="Identity" asp-page="/Account/Manage/Index">Settings</a>
+            <a class="dropdown-item" asp-controller="@currentUser.Link">Profile</a>
             <a class="dropdown-item" href="#">Activity</a>
+            <a class="dropdown-item" id="manage" asp-area="Identity" asp-page="/Account/Manage/Index">Settings</a>
             <a class="dropdown-item" href="#">Help</a>
             <div class="dropdown-divider"></div>
             <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

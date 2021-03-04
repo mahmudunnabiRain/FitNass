@@ -32,5 +32,9 @@ namespace FitNass.Areas.Identity.Data
         [PersonalData]
         [Column(TypeName = "nvarchar(500)")]
         public string Biodata { get; set; }
+
+        [PersonalData]
+        [Column(TypeName = "nvarchar(100)")]
+        public string Link { get; set; }
     }
 }

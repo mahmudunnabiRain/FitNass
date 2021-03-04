@@ -21,9 +21,9 @@
         @if (SignInManager.IsSignedIn(User))
         {
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+            <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/FITNASS-Logo.png" class="rounded-sm" alt="FitNass" width="36" height="36" />
+                    <img src="~/images/FITNASS-Logo-Nav.png" class="rounded-sm" alt="FitNass" width="36" height="36" />
                 </a>
 
                 <form class="d-flex mr-5">
@@ -48,12 +48,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Test" asp-action="Index">Test</a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial.cshtml" />
                 </div>
 
                 <div class="order-1 order-sm-3">
-                    <partial name="_UserPartial.cshtml" />
+                    @await Html.PartialAsync("_UserPartial.cshtml")
                 </div>
 
             </div>
@@ -61,7 +64,7 @@
         }
 
     </header>
-    <div class="container">
+    <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
