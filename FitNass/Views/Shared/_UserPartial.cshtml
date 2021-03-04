@@ -34,15 +34,15 @@
                 color: white;
             }
 
-                .dropdown-item:hover[id=logout], .dropdown-item:focus[id=logout] {
-                    color: white;
-                    text-decoration: none;
-                    background-color: red;
-                }
+            .dropdown-item:hover[id=logout], .dropdown-item:focus[id=logout] {
+                color: white;
+                text-decoration: none;
+                background-color: red;
+            }
         </style>
 
         <div class="dropdown-menu dropdown-menu-right mt-2 shadow-lg border-primary" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" asp-controller="@currentUser.Link">Profile</a>
+            <a class="dropdown-item" asp-controller="Home" asp-action="Profile" asp-route-link="@currentUser.Link">Profile</a>
             <a class="dropdown-item" href="#">Activity</a>
             <a class="dropdown-item" id="manage" asp-area="Identity" asp-page="/Account/Manage/Index">Settings</a>
             <a class="dropdown-item" href="#">Help</a>
