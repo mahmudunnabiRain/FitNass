@@ -27,6 +27,7 @@ namespace FitNass
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddServerSideBlazor();
 
             services.AddDbContext<FitNassDataContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("FitNassDataContext")));
@@ -55,10 +56,13 @@ namespace FitNass
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
+                /*endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");*/
+                endpoints.MapDefaultControllerRoute();
+
                 endpoints.MapRazorPages();
+                endpoints.MapBlazorHub();
             });
         }
     }

@@ -16,12 +16,12 @@ namespace FitNass.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly FitNassContext _context;
+        private readonly FitNassContext _userContext;
 
         public HomeController(ILogger<HomeController> logger, FitNassContext context)
         {
             _logger = logger;
-            _context = context;
+            _userContext = context;
         }
 
         public IActionResult Index()
@@ -40,17 +40,6 @@ namespace FitNass.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        // GET: HomeController
-        [Route("/{link}")]
-        public async Task<IActionResult> ProfileAsync(string link)
-        {
-            if (await _context.Users.FirstOrDefaultAsync(m => m.Link == link) != null)
-            {
-                ViewData["link"] = link;
-                return View("~/Views/Profile/index.cshtml");
-            }
-            return NotFound();
-        }
 
     }
 }

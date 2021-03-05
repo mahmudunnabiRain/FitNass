@@ -11,7 +11,7 @@
 
         <div class="col-sm-6 left-column">
 
-            @await Html.PartialAsync("_InfoPartial.cshtml", @ViewData["link"])
+            <component type="typeof(FitNass.Components.UserIntro)" param-Link="@ViewData["link"]" render-mode="ServerPrerendered" />
 
         </div>
 
