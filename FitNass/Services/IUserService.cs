@@ -11,5 +11,9 @@ namespace FitNass.Services
         Task<FitNassUser> GetUserByLinkAsync(string link);
 
         FitNassUser GetUserByLink(string link);
+
+        void SetBiodata(FitNassUser user, string biodata);
+
+        bool UserExists(string id);
     }
 }

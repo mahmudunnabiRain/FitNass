@@ -31,6 +31,33 @@ namespace FitNass.Services
             return user;
         }
 
+        public void SetBiodata(FitNassUser user, string biodata)
+        {
+            user.Biodata = biodata;
+            try
+            {
+                _context.Update(user);
+                _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(user.Id))
+                {
+                    /*return NotFound();*/
+
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+        public bool UserExists(string id)
+        {
+            return _context.Users.Any(e => e.Id == id);
+        }
+
 
     }
 }

@@ -136,7 +136,7 @@ namespace FitNass.Areas.Identity.Pages.Account
                 var user = new FitNassUser {
                     UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName,
                     LastName = Input.LastName, DOB = Input.DOB, Sex = Input.Sex, Location = Input.Location,
-                    Link = link
+                    Link = link, Biodata = ""
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

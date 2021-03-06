@@ -37,11 +37,19 @@
         </div>
 
         <div class="">
-            <h5 class="card-title mb-3"> @TargetUser.FirstName @TargetUser.LastName</h5>
+            <h4 class="card-title mb-3 font-weight-bold"> @TargetUser.FirstName @TargetUser.LastName</h4>
 
             <div>
-                <p class="mb-0">@TargetUser.Biodata</p>
-                <a href="#" class="" data-toggle="modal" data-target="#bioModal"><small>Edit Bio</small></a>
+                <p class="mb-0 font-weight-normal" style="white-space:pre-line; font-size:15px">@TargetUser.Biodata</p>
+                @if (TargetUser.Biodata.Length > 0)
+                {
+                    <a href="#" class="" data-toggle="modal" data-target="#bioModal"><small>Edit Bio</small></a>
+                }
+                else
+                {
+                    <a href="#" class="" data-toggle="modal" data-target="#bioModal"><small>Add Bio</small></a>
+                }
+
             </div>
 
         </div>
@@ -107,9 +115,9 @@
                 <form>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Message:</label>
-                        <textarea class="form-control" id="message-text" rows="6" @bind="BioEditTextData"></textarea>
+                        <textarea class="form-control" id="message-text" rows="6" maxlength="300" @bind="BioEditTextData"></textarea>
                     </div>
-                    <button type="button" class="btn btn-success btn-block">Save changes</button>
+                    <button type="button" class="btn btn-success btn-block" data-dismiss="modal" @onclick="UpdateBio">Save changes</button>
                 </form>
             </div>
         </div>
@@ -162,6 +170,11 @@ public string BioEditTextData { get; set; }
 private void BioEditTextClosed()
 {
     BioEditTextData = TargetUser.Biodata;
+}
+private void UpdateBio()
+{
+    //BioEditTextData = BioEditTextData.Replace("\r\n", "<br />");
+    UserService.SetBiodata(TargetUser, BioEditTextData);
 }
 
 

@@ -12,17 +12,17 @@ namespace FitNass.Validators
 {
     public class UniqueEmailAttribute : ValidationAttribute
     {
-
-
+        public FitNassUser TargetUser { get; set; }
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             //var user = (FitNassUser)validationContext.ObjectInstance;
             FitNassContext db = (FitNassContext)validationContext.GetService(typeof(FitNassContext));
 
             var email = ((string)value);
-            var targetUser = db.Users.SingleOrDefaultAsync(b => b.Email.Equals(email));
 
-            if (targetUser != null)
+            TargetUser = db.Users.SingleOrDefault(b => b.Email.Equals(email));
+
+            if (TargetUser != null)
             {
                 return new ValidationResult($"Email '{email}' is already in use.");
             }
