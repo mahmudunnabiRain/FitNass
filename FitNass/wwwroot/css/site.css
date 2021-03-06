@@ -62,6 +62,7 @@ body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
   font-family: "Roboto", sans-serif;
+  background-color:floralwhite;
 }
 .footer {
   position: absolute;

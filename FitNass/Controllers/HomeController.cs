@@ -16,12 +16,10 @@ namespace FitNass.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly FitNassContext _userContext;
 
-        public HomeController(ILogger<HomeController> logger, FitNassContext context)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _userContext = context;
         }
 
         public IActionResult Index()

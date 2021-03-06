@@ -1,4 +1,5 @@
 ﻿using FitNass.Data;
+using FitNass.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,18 +11,19 @@ namespace FitNass.Controllers
 {
     public class ProfileController : Controller
     {
-        private readonly FitNassContext _userContext;
+        private readonly IUserService _userService;
 
-        public ProfileController(FitNassContext context)
+        public ProfileController(IUserService userService)
         {
-            _userContext = context;
+            _userService = userService;
         }
 
         // GET: HomeController
         /*[Route("/Profile/{link}")]*/
         public async Task<IActionResult> IndexAsync(string link)
         {
-            if (await _userContext.Users.FirstOrDefaultAsync(m => m.Link == link) != null)
+
+            if( await _userService.GetUserByLinkAsync(link) != null)
             {
                 ViewData["link"] = link;
                 return View();
