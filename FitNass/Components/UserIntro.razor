@@ -4,7 +4,8 @@
 @using FitNass.Services
 @inject SignInManager<FitNassUser> SignInManager
 @inject UserManager<FitNassUser> UserManager
-@inject IUserService UserService 
+@inject IUserService UserService
+@inject IJSRuntime JSRuntime
 
 <style>
     .card {
@@ -12,6 +13,23 @@
         float: none;
         margin-bottom: 10px;
     }
+    .crop-dp {
+        margin: 0 auto;
+        float: none;
+    }
+    .crop-controls {
+        background-color: gray; 
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 6px 0px;
+        outline: none !important;
+    }
+    .crop-controls:hover {
+        background-color: black;
+    }
+
+
 </style>
 
 
@@ -27,7 +45,7 @@
                 }
                 else if (TargetUser.Sex == "Male")
                 {
-                    <img src="/images/Rain-DP.jpg" class="rounded-circle" alt="Male User" width="160" height="160" />
+                    <img src="/images/Blank-DP-Male.jpg" class="rounded-circle" alt="Male User" width="160" height="160" />
                 }
                 else
                 {
@@ -35,6 +53,7 @@
                 }
             }
         </div>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#dpModal">update dp</button>
 
         <div class="">
             <h4 class="card-title mb-3 font-weight-bold"> @TargetUser.FirstName @TargetUser.LastName</h4>
@@ -101,6 +120,7 @@
 </div>
 
 
+
 <!-- Modal -->
 <div class="modal fade" id="bioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -135,11 +155,29 @@
                 </button>
             </div>
             <div class="modal-body">
-                ...
+
+                <div id="theparent" class="crop-dp border border-secondary" style="width: 70%;">
+
+                    <div class="p-2">
+                        <img id="thepicture" src="/images/FITNASS-Logo.png" alt="Others User" />
+                    </div>
+
+                    <div class="btn-group  btn-block justify-content-between" role="group" aria-label="Basic example">
+
+                        <button id='rotate-left' type="button" class="w-100 crop-controls"><i class="fa fa-undo" aria-hidden="true"></i></button>
+                        <button id='zoom-out' type="button" class="w-100 crop-controls"><i class="fa fa-search-minus" aria-hidden="true"></i></button>
+                        <button id='fit' type="button" class="w-100 crop-controls"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
+                        <button id='zoom-in' type="button" class="w-100 crop-controls"><i class="fa fa-search-plus" aria-hidden="true"></i></button>
+                        <button id='rotate-right' type="button" class="w-100 crop-controls"><i class="fa fa-redo" aria-hidden="true"></i></button>
+
+                    </div>
+
+                </div>
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Upload</button>
+                <button type="button" class="btn btn-success btn-block">Save changes</button>
             </div>
         </div>
     </div>
@@ -173,9 +211,18 @@ private void BioEditTextClosed()
 }
 private void UpdateBio()
 {
-    //BioEditTextData = BioEditTextData.Replace("\r\n", "<br />");
     UserService.SetBiodata(TargetUser, BioEditTextData);
 }
+
+
+protected override async Task OnAfterRenderAsync(bool firstRender)
+{
+    if (firstRender)
+    {
+        await JSRuntime.InvokeVoidAsync("callJcrop");
+    }
+}
+
 
 
 }
