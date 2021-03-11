@@ -137,7 +137,7 @@
                         <label for="message-text" class="col-form-label">Message:</label>
                         <textarea class="form-control" id="message-text" rows="6" maxlength="300" @bind="BioEditTextData"></textarea>
                     </div>
-                    <button type="button" class="btn btn-success btn-block" data-dismiss="modal" @onclick="UpdateBio">Save changes</button>
+                    <button type="button" class="btn btn-success btn-block" data-dismiss="modal" @onclick="UpdateBio"><i class="fas fa-save"></i></button>
                 </form>
             </div>
         </div>
@@ -156,19 +156,21 @@
             </div>
             <div class="modal-body">
 
-                <div id="theparent" class="crop-dp border border-secondary" style="width: 70%;">
+                <p class="text-center"><strong id="dpUploadStatus">No Image Uploaded Yet</strong></p>
+
+                <div id="theparent" class="crop-dp border border-secondary w-75">
 
                     <div class="p-2">
-                        <img id="thepicture" src="/images/FITNASS-Logo.png" alt="Others User" />
+                        <img id="dpUploadedImage" src="/images/Blank-User.png" />
                     </div>
 
                     <div class="btn-group  btn-block justify-content-between" role="group" aria-label="Basic example">
 
-                        <button id='rotate-left' type="button" class="w-100 crop-controls"><i class="fa fa-undo" aria-hidden="true"></i></button>
-                        <button id='zoom-out' type="button" class="w-100 crop-controls"><i class="fa fa-search-minus" aria-hidden="true"></i></button>
-                        <button id='fit' type="button" class="w-100 crop-controls"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
-                        <button id='zoom-in' type="button" class="w-100 crop-controls"><i class="fa fa-search-plus" aria-hidden="true"></i></button>
-                        <button id='rotate-right' type="button" class="w-100 crop-controls"><i class="fa fa-redo" aria-hidden="true"></i></button>
+                        <button id='rotate-left' type="button" class="w-100 crop-controls" title="rotate left"><i class="fa fa-undo" aria-hidden="true"></i></button>
+                        <button id='zoom-out' type="button" class="w-100 crop-controls" title="zoom out"><i class="fa fa-search-minus" aria-hidden="true"></i></button>
+                        <button id='fit' type="button" class="w-100 crop-controls" title="reset"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
+                        <button id='zoom-in' type="button" class="w-100 crop-controls" title="zoom in"><i class="fa fa-search-plus" aria-hidden="true"></i></button>
+                        <button id='rotate-right' type="button" class="w-100 crop-controls" title="rotate right"><i class="fa fa-redo" aria-hidden="true"></i></button>
 
                     </div>
 
@@ -176,8 +178,9 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Upload</button>
-                <button type="button" class="btn btn-success btn-block">Save changes</button>
+                <label for="dpFileSelector" class="btn btn-primary btn-block mt-2 text-nowrap" title="upload image"><i class="fas fa-upload"></i></label>
+                <input type="file" id="dpFileSelector" accept="image/png, image/jpeg, image/jpg" hidden/>
+                <button type="button" class="btn btn-success btn-block" title="save image"><i class="fas fa-save"></i></button>
             </div>
         </div>
     </div>
@@ -219,7 +222,7 @@ protected override async Task OnAfterRenderAsync(bool firstRender)
 {
     if (firstRender)
     {
-        await JSRuntime.InvokeVoidAsync("callJcrop");
+        await JSRuntime.InvokeVoidAsync("userIntroJS");
     }
 }
 
